@@ -15,7 +15,7 @@ end
 
 function ItemSpawnerService:spawnItem(position)
 	print("Spawning item at position:", position)
-	local item = ServerStorage.Items.Battery:Clone()
+	local item = ServerStorage.Templates.Battery:Clone()
 	item.Position = position
 	item.Parent = workspace
 

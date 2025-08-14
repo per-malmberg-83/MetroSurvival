@@ -1,18 +1,12 @@
 local Players = game:GetService("Players")
 local DataStoreService = game:GetService("DataStoreService")
-local ServerScriptService = game:GetService("ServerScriptService")
-local PlayerInventory = require(ServerScriptService.Players.PlayerInventory)
+local ServerStorage = game:GetService("ServerStorage")
+local InventoryItem = require(script.Parent.InventoryItem)
+local PlayerInventory = require(ServerStorage.Scripts.PlayerInventory)
 
 local PlayerDataService = {
 	playerInventories = {},
 }
-
-function PlayerDataService:addItem(player, item)
-	if not self.playerInventories[player.UserId] then
-		self.playerInventories[player.UserId] = PlayerInventory.new()
-	end
-	self.playerInventories[player.UserId]:addItem(item)
-end
 
 function PlayerDataService:loadPlayerInventory(player)
 	local inventory = self.playerInventories[player.UserId]
@@ -40,8 +34,24 @@ function PlayerDataService:loadPlayerInventory(player)
 	end
 end
 
+function PlayerDataService:addItem(player, item)
+	print("Trying to add item " .. tostring(item.type) .. " to player " .. player.Name)
+	if not item or not item.type then
+		error("Invalid item provided to PlayerDataService:addItem: " .. tostring(item))
+		return
+	end
+	if not self.playerInventories[player.UserId] then
+		print("Creating new inventory for player " .. player.Name)
+		self.playerInventories[player.UserId] = PlayerInventory.new()
+	end
+	local inventoryItem = InventoryItem.new(item.type, 1)
+	self.playerInventories[player.UserId]:addItem(inventoryItem)
+end
+
 -- Events
 
 Players.PlayerAdded:Connect(function(player)
 	PlayerDataService:loadPlayerInventory(player)
 end)
+
+return PlayerDataService

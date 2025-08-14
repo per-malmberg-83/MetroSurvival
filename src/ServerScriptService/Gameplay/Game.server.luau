@@ -1,12 +1,15 @@
-local ItemSpawnerService = require(script.Parent.ItemSpawnerService)
+local ServerStorage = game:GetService("ServerStorage")
+local ItemSpawnerService = require(ServerStorage.Scripts.ItemSpawnerService)
 
 -- Declaration
+
 local Game = {}
 Game.__index = Game
 
 -- Functions
 
 function Game.new()
+	print("Creating new game instance")
 	local self = setmetatable({}, Game)
 	self.itemSpawner = ItemSpawnerService.new()
 	return self
@@ -17,4 +20,7 @@ function Game:start()
 	self.itemSpawner:spawnItem(Vector3.new(5, 10, 0))
 end
 
-return Game
+-- Logic
+
+local gameInstance = Game.new()
+gameInstance:start()

@@ -1,3 +1,6 @@
+local ServerStorage = game:GetService("ServerStorage")
+local PlayerDataService = require(ServerStorage.Scripts.PlayerDataService)
+
 -- Declaration
 
 local Battery = {}
@@ -10,6 +13,7 @@ function Battery.new(part)
 
 	local self = setmetatable({}, Battery)
 	self.part = part
+	self.type = "Battery"
 
 	self.clickDetector = part:FindFirstChild("ClickDetector")
 	if not self.clickDetector then
@@ -25,6 +29,7 @@ end
 
 function Battery:pickUp(player)
 	print("battery clicked by " .. player.Name)
+	PlayerDataService:addItem(player, self)
 end
 
 return Battery

@@ -3,21 +3,31 @@
   "tree": {
     "$className": "DataModel",
     "ReplicatedStorage": {
+      "$className": "ReplicatedStorage",
       "$path": "src/ReplicatedStorage"
     },
-    "ServerStorage": {
-      "$path": "src/ServerStorage"
-    },
     "ServerScriptService": {
+      "$className": "ServerScriptService",
       "$path": "src/ServerScriptService"
     },
+    "ServerStorage": {
+      "$className": "ServerStorage",
+      "$path": "src/ServerStorage"
+    },
     "StarterPlayer": {
-      "StarterCharacterScripts": {
-        "$path": "src/StarterCharacterScripts"
-      },
+      "$className": "StarterPlayer",
       "StarterPlayerScripts": {
-        "$path": "src/StarterPlayerScripts"
+        "$className": "StarterPlayerScripts",
+        "$path": "src/StarterPlayer/StarterPlayerScripts"
+      },
+      "StarterCharacterScripts": {
+        "$className": "StarterCharacterScripts",
+        "$path": "src/StarterPlayer/StarterCharacterScripts"
       }
+    },
+    "StarterGui": {
+      "$className": "StarterGui",
+      "$path": "src/StarterGui"
     }
-  }
+  } 
 }

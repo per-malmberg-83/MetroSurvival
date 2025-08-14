@@ -1,4 +1,5 @@
 local ServerStorage = game:GetService("ServerStorage")
+local BatteryScript = require(ServerStorage.Scripts.Battery)
 
 -- Declaration
 
@@ -18,7 +19,7 @@ function ItemSpawnerService:spawnItem(position)
 	item.Position = position
 	item.Parent = workspace
 
-	local batteryScript = ServerStorage.Scripts.Items.Battery:Clone()
+	local batteryScript = BatteryScript.new(item)
 	batteryScript.Parent = item
 	return item
 end

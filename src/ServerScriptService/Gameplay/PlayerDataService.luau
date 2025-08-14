@@ -1,7 +1,7 @@
 local Players = game:GetService("Players")
 local DataStoreService = game:GetService("DataStoreService")
 local ServerScriptService = game:GetService("ServerScriptService")
-local PlayerInventory = require(ServerScriptService.Server.Players.PlayerInventory)
+local PlayerInventory = require(ServerScriptService.Players.PlayerInventory)
 
 local PlayerDataService = {
 	playerInventories = {},

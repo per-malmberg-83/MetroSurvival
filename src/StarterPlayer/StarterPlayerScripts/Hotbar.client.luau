@@ -1,18 +1,16 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local InventoryItem = require(ReplicatedStorage.Scripts.InventoryItem)
-local Hotbar = {}
 
 -- Declaration
 
-Hotbar.__index = Hotbar
+local hotbar = {
+	items = {},
+}
 
 -- Functions
 
-function Hotbar.new()
+function hotbar:init()
 	print("[CLIENT] Creating new Hotbar instance")
-	local self = setmetatable({}, Hotbar)
-	self.items = {}
-
 	self.updateHotbarEvent = ReplicatedStorage.Events:WaitForChild("UpdateHotbarEvent")
 	self.updateHotbarEvent.OnClientEvent:Connect(function(item)
 		print("Received item for hotbar update: " .. tostring(item.type))
@@ -22,7 +20,7 @@ function Hotbar.new()
 	return self
 end
 
-function Hotbar:addItem(item)
+function hotbar:addItem(item)
 	print("[CLIENT] Adding item to hotbar: " .. tostring(item))
 	if not item or not item.type then
 		error("Invalid item provided to Hotbar:addItem: " .. tostring(item))
@@ -52,4 +50,4 @@ function Hotbar:addItem(item)
 	end
 end
 
-Hotbar.new()
+hotbar:init()

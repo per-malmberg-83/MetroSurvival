@@ -1,12 +1,27 @@
 local Players = game:GetService("Players")
 local DataStoreService = game:GetService("DataStoreService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ServerStorage = game:GetService("ServerStorage")
-local InventoryItem = require(script.Parent.InventoryItem)
+
+local InventoryItem = require(ReplicatedStorage.Scripts.InventoryItem)
 local PlayerInventory = require(ServerStorage.Scripts.PlayerInventory)
 
-local PlayerDataService = {
-	playerInventories = {},
-}
+-- Declaration
+
+local PlayerDataService = {}
+PlayerDataService.__index = PlayerDataService
+
+function PlayerDataService.new()
+	local self = setmetatable({}, PlayerDataService)
+	self.playerInventories = {}
+	self.updatePlayerHotbar = ReplicatedStorage.Events:WaitForChild("UpdateHotbarEvent")
+	Players.PlayerAdded:Connect(function(player)
+		self:loadPlayerInventory(player)
+	end)
+	return self
+end
+
+-- Functions
 
 function PlayerDataService:loadPlayerInventory(player)
 	local inventory = self.playerInventories[player.UserId]
@@ -34,7 +49,7 @@ function PlayerDataService:loadPlayerInventory(player)
 	end
 end
 
-function PlayerDataService:addItem(player, item)
+function PlayerDataService:addInventoryItem(player, item)
 	print("Trying to add item " .. tostring(item.type) .. " to player " .. player.Name)
 	if not item or not item.type then
 		error("Invalid item provided to PlayerDataService:addItem: " .. tostring(item))
@@ -44,14 +59,15 @@ function PlayerDataService:addItem(player, item)
 		print("Creating new inventory for player " .. player.Name)
 		self.playerInventories[player.UserId] = PlayerInventory.new()
 	end
-	local inventoryItem = InventoryItem.new(item.type, 1)
+	local inventoryItem = InventoryItem.new(item.type, 1, item.icon)
 	self.playerInventories[player.UserId]:addItem(inventoryItem)
+	print(
+		"[SERVER] Firing remote event UpdateHotbarEvent for player "
+			.. player.Name
+			.. " with item: "
+			.. tostring(inventoryItem.type)
+	)
+	self.updatePlayerHotbar:FireClient(player, inventoryItem:serialize())
 end
-
--- Events
-
-Players.PlayerAdded:Connect(function(player)
-	PlayerDataService:loadPlayerInventory(player)
-end)
 
 return PlayerDataService

@@ -1,5 +1,5 @@
 local ServerStorage = game:GetService("ServerStorage")
-local PlayerDataService = require(ServerStorage.Scripts.PlayerDataService)
+local gameInstance = require(ServerStorage.Scripts.GameInstance)
 
 -- Declaration
 
@@ -14,12 +14,14 @@ function Battery.new(part)
 	local self = setmetatable({}, Battery)
 	self.part = part
 	self.type = "Battery"
+	self.icon = "rbxassetid://78755242188152"
 
 	self.clickDetector = part:FindFirstChild("ClickDetector")
 	if not self.clickDetector then
 		error("No ClickDetector found on part: " .. tostring(part))
 		return nil
 	end
+
 	self.clickDetector.MouseClick:Connect(function(player)
 		self:pickUp(player)
 	end)
@@ -29,7 +31,7 @@ end
 
 function Battery:pickUp(player)
 	print("battery clicked by " .. player.Name)
-	PlayerDataService:addItem(player, self)
+	gameInstance:addInventoryItem(player, self)
 end
 
 return Battery

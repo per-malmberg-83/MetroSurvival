@@ -12,7 +12,6 @@
     "ServerScriptService": {
       "$ignoreUnknownInstances": true,
       "$className": "ServerScriptService",
-      "$path": "src/ServerScriptService",
       "Scripts": {       
         "$path": "src/ServerScriptService/Scripts"
       }
@@ -20,7 +19,6 @@
     "ServerStorage": {
       "$ignoreUnknownInstances": true,
       "$className": "ServerStorage",
-      "$path": "src/ServerStorage",
       "Scripts": {       
         "$path": "src/ServerStorage/Scripts"
       },

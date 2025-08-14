@@ -1,4 +1,3 @@
-local ServerStorage = game:GetService("ServerStorage")
 local ITEM_CONFIGS = {
 	Battery = {
 		type = "Battery",

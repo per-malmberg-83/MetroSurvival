@@ -23,7 +23,7 @@ end
 
 -- Functions
 
-function PlayerDataService:loadPlayerInventory(player)
+function PlayerDataService:loadPlayerInventory(player: Player)
 	local inventory = self.playerInventories[player.UserId]
 	if not inventory then
 		local success, data = pcall(function()
@@ -49,7 +49,7 @@ function PlayerDataService:loadPlayerInventory(player)
 	end
 end
 
-function PlayerDataService:addInventoryItem(player, item)
+function PlayerDataService:addInventoryItem(player: Player, item: Battery)
 	print("Trying to add item " .. tostring(item.type) .. " to player " .. player.Name)
 	if not item or not item.type then
 		error("Invalid item provided to PlayerDataService:addItem: " .. tostring(item))
@@ -61,13 +61,9 @@ function PlayerDataService:addInventoryItem(player, item)
 	end
 	local inventoryItem = InventoryItem.new(item.type, 1, item.icon)
 	self.playerInventories[player.UserId]:addItem(inventoryItem)
-	print(
-		"[SERVER] Firing remote event UpdateHotbarEvent for player "
-			.. player.Name
-			.. " with item: "
-			.. tostring(inventoryItem.type)
-	)
 	self.updatePlayerHotbar:FireClient(player, inventoryItem:serialize())
+	-- todo: Save the inventory to the DataStore
+	item:destroy() -- Clean up the item after adding to inventory
 end
 
 return PlayerDataService

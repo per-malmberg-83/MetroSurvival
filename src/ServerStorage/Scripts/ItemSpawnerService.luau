@@ -13,7 +13,7 @@ function ItemSpawnerService.new()
 	return self
 end
 
-function ItemSpawnerService:spawnItem(position)
+function ItemSpawnerService:spawnItem(position: Vector3)
 	print("Spawning item at position:", position)
 
 	local config = ITEM_CONFIGS.Battery

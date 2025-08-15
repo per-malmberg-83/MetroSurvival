@@ -7,7 +7,7 @@ TrainControlsButton.__index = TrainControlsButton
 
 -- Functions
 
-function TrainControlsButton.new(part)
+function TrainControlsButton.new(part: Part)
 	local self = setmetatable({}, TrainControlsButton)
 	self.part = part
 	self.originalCFrame = self.part.CFrame

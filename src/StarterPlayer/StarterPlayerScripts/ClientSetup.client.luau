@@ -8,5 +8,5 @@ local hotbar = player:WaitForChild("PlayerGui"):WaitForChild("ScreenGui"):WaitFo
 
 print("Setting up hotbar " .. tostring(hotbar))
 
-local hotbarScript = StarterPlayer.StarterPlayerScripts.Hotbar:Clone()
-hotbarScript.Parent = hotbar
+local hotbarScript = require(StarterPlayer.StarterPlayerScripts.Hotbar)
+hotbarScript.new(hotbar)
